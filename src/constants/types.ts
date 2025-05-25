@@ -22,11 +22,9 @@ export interface PokemonDetails {
     abilities: { ability: { name: string } }[];
     stats: { base_stat: number; stat: { name: string } }[];
   }
-// export interface FetchResult<T> {
-//   data: T | null;
-//   loading: boolean;
-//   error: string | null;
-// }
-// export interface ErrorResponse {
-//   message: string;
-// }
+export interface DataLoaderProps {
+  loading: boolean;
+  error: string | null;
+  data: any;
+  children: React.ReactNode;
+}

@@ -1,11 +1,4 @@
-import React from "react";
-
-interface DataLoaderProps {
-  loading: boolean;
-  error: string | null;
-  data: any;
-  children: React.ReactNode;
-}
+import { DataLoaderProps } from "../../constants/types";
 
 const DataLoader: React.FC<DataLoaderProps> = ({ loading, error, data, children }) => {
   if (loading) return <p>Loading...</p>;
