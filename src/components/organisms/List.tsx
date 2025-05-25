@@ -20,13 +20,6 @@ const List: React.FC = () => {
 
   const { data, loading, error } = useFetchData<PokemonListResponse>(apiUrl);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setNextUrl(data.next);
-  //     setPrevUrl(data.previous);
-  //   }
-  // }, [data]);
-
   const handleNextPage = () => {
     if (data?.next) setApiUrl(data.next);
   };
