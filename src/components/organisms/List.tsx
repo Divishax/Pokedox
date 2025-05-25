@@ -1,74 +1,58 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useFetchData from "../../hooks/useFetchData";
 
 interface Pokemon {
   name: string;
   url: string;
 }
 
+interface PokemonListResponse {
+  results: Pokemon[];
+  next: string | null;
+  previous: string | null;
+}
+
 const List: React.FC = () => {
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [nextUrl, setNextUrl] = useState<string | null>(
+  const [apiUrl, setApiUrl] = useState<string>(
     "https://pokeapi.co/api/v2/pokemon?limit=20"
   );
-  const [prevUrl, setPrevUrl] = useState(null);
 
-  const fetchPokemons = async (url: string | null) => {
-    if (!url) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      setPokemons(data.results);
-      setNextUrl(data.next);
-      setPrevUrl(data.previous);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data, loading, error } = useFetchData<PokemonListResponse>(apiUrl);
 
-  useEffect(() => {
-    fetchPokemons(nextUrl);
-  }, []);
+  // useEffect(() => {
+  //   if (data) {
+  //     setNextUrl(data.next);
+  //     setPrevUrl(data.previous);
+  //   }
+  // }, [data]);
 
   const handleNextPage = () => {
-    if (nextUrl) {
-      fetchPokemons(nextUrl);
-    }
+    if (data?.next) setApiUrl(data.next);
   };
 
   const handlePrevPage = () => {
-    if (prevUrl) {
-      fetchPokemons(prevUrl);
-    }
+    if (data?.previous) setApiUrl(data.previous);
   };
 
   if (loading) return <p>Loading Pokemons ...</p>;
   if (error) return <p>{error}</p>;
+  if (!data) return <p>No data found.</p>;
 
   return (
     <>
       <h1>Pokédex</h1>
       <ul>
-        {pokemons.map((pokemon) => (
+        {data?.results.map((pokemon) => (
           <li key={pokemon.name}>
             <Link to={`/pokemon/${pokemon.name}`}>{pokemon.name}</Link>
           </li>
-          // <Details key={index} pokemonUrl={pokemon.url} />
         ))}
       </ul>
-      <button onClick={handlePrevPage} disabled={!prevUrl}>
+      <button onClick={handlePrevPage} disabled={!data.previous}>
         Previous
       </button>
-      <button onClick={handleNextPage} disabled={!nextUrl}>
+      <button onClick={handleNextPage} disabled={!data.next}>
         Next
       </button>
     </>

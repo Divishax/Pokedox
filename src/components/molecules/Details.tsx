@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useFetchData from "../../hooks/useFetchData";
 
 interface Details {
   name: string;
@@ -20,42 +20,7 @@ interface Details {
 const Details: React.FC = () => {
   const { name } = useParams();
   const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${name}`;
-  const [pokemon, setPokemon] = useState<Details | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchPokemon = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(pokemonUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        if (isMounted) {
-          setPokemon(data);
-        }
-      } catch (err: any) {
-        if (isMounted) {
-          setError(err.message);
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchPokemon();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [pokemonUrl]);
+  const { data: pokemon, loading, error } = useFetchData<Details>(pokemonUrl);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
