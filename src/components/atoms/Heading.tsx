@@ -9,7 +9,12 @@ interface HeadingProps {
 const Heading: React.FC<HeadingProps> = ({ mainText, subText }) => {
   return (
     <div className="flex items-center space-x-2">
-      <Typography variant="h4" component="h1" className="font-bold">
+      <Typography
+        variant="h4"
+        component="h1"
+        className="font-bold"
+        sx={{ marginY: 4 }}
+      >
         {mainText}
       </Typography>
       <span className="text-gray-500 ml-5 mr-5 text-lg">|</span>
