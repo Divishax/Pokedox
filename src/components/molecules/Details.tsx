@@ -1,26 +1,13 @@
 import { useParams } from "react-router-dom";
 import useFetchData from "../../hooks/useFetchData";
 
-interface Details {
-  name: string;
-  id: number;
-  sprites: {
-    front_default: string | null;
-    other: {
-      "official-artwork": {
-        front_default: string | null;
-      };
-    };
-  };
-  types: { type: { name: string } }[];
-  abilities: { ability: { name: string } }[];
-  stats: { base_stat: number; stat: { name: string } }[];
-}
+import { PokemonDetails } from "../../constants/types";
+import { API_BASE_URL } from "../../constants/constants";
 
 const Details: React.FC = () => {
   const { name } = useParams();
-  const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${name}`;
-  const { data: pokemon, loading, error } = useFetchData<Details>(pokemonUrl);
+  const pokemonUrl = `${API_BASE_URL}/pokemon/${name}`;
+  const { data: pokemon, loading, error } = useFetchData<PokemonDetails>(pokemonUrl);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;

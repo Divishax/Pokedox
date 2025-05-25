@@ -1,21 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
 import useFetchData from "../../hooks/useFetchData";
 
-interface Pokemon {
-  name: string;
-  url: string;
-}
-
-interface PokemonListResponse {
-  results: Pokemon[];
-  next: string | null;
-  previous: string | null;
-}
+import { PokemonListResponse } from "../../constants/types"; 
+import { API_BASE_URL, POKEMON_LIMIT } from "../../constants/constants";
 
 const List: React.FC = () => {
   const [apiUrl, setApiUrl] = useState<string>(
-    "https://pokeapi.co/api/v2/pokemon?limit=20"
+    `${API_BASE_URL}/pokemon?limit=${POKEMON_LIMIT}`
   );
 
   const { data, loading, error } = useFetchData<PokemonListResponse>(apiUrl);
