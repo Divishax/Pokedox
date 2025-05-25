@@ -13,9 +13,13 @@ const Search: React.FC<SearchProps> = ({ data }) => {
 
   useEffect(() => {
     if (data) {
-      const filtered = data.results.filter((pokemon) =>
-        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        pokemon.url.split("/").slice(-2, -1)[0].includes(searchTerm)
+      const filtered = data.results.filter((pokemon) => {
+        const pokemonId = pokemon.url.split("/").slice(-2, -1)[0];
+        return (
+            pokemon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            pokemonId.includes(searchTerm)
+        )
+      }
       );
       setFilteredPokemons(filtered);
     }
