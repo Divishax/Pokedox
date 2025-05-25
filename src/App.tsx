@@ -1,10 +1,12 @@
-import PokemonList from "./components/organisms/PokemonList";
+import Details from "./components/molecules/Details";
+import List from "./components/organisms/List";
 import { Routes, Route } from "react-router-dom";
 const App: React.FC = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<PokemonList/>}/>
+        <Route path="/" element={<List/>}/>
+        <Route path="/pokemon/:name" element={<Details/>}/>
       </Routes>
     </>
   )
