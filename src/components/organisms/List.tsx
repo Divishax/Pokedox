@@ -7,6 +7,7 @@ import { API_BASE_URL, POKEMON_LIMIT } from "../../constants/constants";
 
 import DataLoader from "../atoms/DataLoader";
 import Search from "../molecules/Search";
+import Heading from "../atoms/Heading";
 
 const List: React.FC = () => {
   const [apiUrl, setApiUrl] = useState<string>(
@@ -25,7 +26,7 @@ const List: React.FC = () => {
 
   return (
     <>
-      <h1>Pokédex</h1>
+      <Heading mainText="Pokedox" subText="Search for any Pokemon that exists on the Planet"/>
       <DataLoader loading={loading} error={error} data={data}>
         <Search data={data}/>
         <button onClick={handlePrevPage} disabled={!data?.previous}>
