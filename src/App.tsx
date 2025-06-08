@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import Layout from "./components/atoms/Layout";
-import Details from "./components/molecules/Details";
+import Details from "./components/organisms/Details";
 import List from "./components/organisms/List";
 
 const App: React.FC = () => {
