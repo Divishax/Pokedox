@@ -9,8 +9,8 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
   return (
-    <Box sx={{ borderRadius: 1 }}>
-      <Typography variant="subtitle1" sx={{ mb: 1 }}>
+    <Box sx={{ borderRadius: 1, backgroundColor: "#f0f4f8", flexGrow: 1 }}>
+      <Typography variant="subtitle1" sx={{ mb: 1, color: "#333" }}>
         Search by
       </Typography>
       <TextField
@@ -20,14 +20,25 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         sx={{
-          backgroundColor: "#e0e0e0",
+          backgroundColor: "#ffffff",
           width: "100%",
-          maxWidth: "400px",
+          maxWidth: "500px",
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "#ccc",
+            },
+            "&:hover fieldset": {
+              borderColor: "#888",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#555",
+            },
+          },
         }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <SearchIcon />
+              <SearchIcon sx={{ color: "#888" }} />
             </InputAdornment>
           ),
         }}
