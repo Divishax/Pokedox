@@ -16,11 +16,16 @@ const Card: React.FC<CardProps> = ({ image, name, id }) => {
     <MuiCard
       sx={{
         width: 180,
-        margin: "auto",
+        margin: "16px auto",
         borderRadius: 2,
         boxShadow: 3,
-        border: "2px dotted #000",
+        border: "2px dotted #ccc",
+        backgroundColor: "rgba(223, 199, 228, 0.8)",
+        "&:hover": {
+          boxShadow: 6,
+        },
       }}
+      className="transition-shadow duration-300 ease-in-out"
     >
       <CardMedia
         component="img"
@@ -34,10 +39,15 @@ const Card: React.FC<CardProps> = ({ image, name, id }) => {
           variant="h5"
           component="div"
           textAlign="center"
+          className="text-black-700 capitalize font-bold text-lg"
         >
           {name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          className="text-gray-600"
+        >
           ID: {id}
         </Typography>
       </CardContent>
