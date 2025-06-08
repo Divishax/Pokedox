@@ -1,30 +1,15 @@
-// hooks/usePokemonDetails.ts
 import { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
+
 import { API_BASE_URL } from "../constants/constants";
-import { PokemonDetails } from "../constants/types";
-
-interface SpeciesDetails {
-  flavor_text_entries: { flavor_text: string; language: { name: string } }[];
-  gender_rate: number;
-  egg_groups: { name: string }[];
-  evolution_chain: { url: string };
-}
-
-interface TypeDetails {
-  damage_relations: {
-    double_damage_from: { name: string }[];
-  };
-}
-
-interface EvolutionStep {
-  species: { name: string };
-  evolves_to: EvolutionStep[];
-}
-
-interface EvolutionChain {
-  chain: EvolutionStep;
-}
+import {
+  PokemonDetails,
+  SpeciesDetails,
+  TypeDetails,
+  EvolutionStep,
+  EvolutionChain,
+} from "../constants/types";
 
 export function usePokemonDetails() {
   const { name } = useParams();
@@ -68,7 +53,9 @@ export function usePokemonDetails() {
 
         let current: EvolutionStep | undefined = evoData.chain;
         while (current) {
-          const res = await fetch(`${API_BASE_URL}/pokemon/${current.species.name}`);
+          const res = await fetch(
+            `${API_BASE_URL}/pokemon/${current.species.name}`
+          );
           const pokeData = await res.json();
           chain.push({
             name: current.species.name,
